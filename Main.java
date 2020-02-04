@@ -5,8 +5,9 @@ public class Main {
 
     public static void main (String[] args){
 
-        int playerNum = getPlayers();
+        int playerNum = 2;
 
+        /**
         int remainder = 0;
 
         if (52 % playerNum > 0){
@@ -14,8 +15,7 @@ public class Main {
             remainder = 52 % playerNum;
         }
 
-        System.out.println("remainder: " + remainder);
-
+         */
 
         WarGame war = new WarGame();
         war.play(playerNum);
@@ -23,6 +23,7 @@ public class Main {
 
     }
 
+    /**
     public static int getPlayers(){
 
         Scanner scan = new Scanner(System.in);
@@ -38,4 +39,5 @@ public class Main {
         }
         return playerNum;
     }
+     */
 }
