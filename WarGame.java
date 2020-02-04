@@ -2,171 +2,152 @@ import java.util.ArrayList;
 
 public class WarGame {
 
+    private int wins;
 
     public void play(int playerNum) {
-        int winner = 0;
 
         Deck d = new Deck();
         d.addCards();
         d.shuffle();
 
-        Card highest = new Card();
-        int losers = 0;
+        Card highest = new Card("", 0);
 
-        ArrayList <ArrayList <Card> > players_decks = new ArrayList<ArrayList<Card>>();
+        ArrayList <ArrayList> players_decks = new ArrayList<>();
         ArrayList <Card> cardsInPlay = new ArrayList<>();
 
-        int per = 52 / playerNum; // hand 26
-        ArrayList<Card> pDeck = new ArrayList();
+        ArrayList <Card> playerOne = d.deal(playerNum);
+        players_decks.add(playerOne);
+        ArrayList <Card> playerTwo = d.deal(playerNum);
+        players_decks.add(playerTwo);
 
+        /**
         for (int i = 0; i < playerNum; i++) {
-            pDeck = d.deal(per);
-            players_decks.add(i, pDeck);
+            ArrayList <Card> player = d.deal(playerNum);
+            players_decks.add(player);
         }
+         */
 
-        while (losers != playerNum - 1) {
+        //Card max;
+        // ERIC IDK HOW TO FIX THIS 
+        // how to like idk uhhh remember the players' cards and compare
 
+        boolean gameOn = true;
+
+        while (gameOn){
             for (int j = 0; j < playerNum; j++) {
-
-                ArrayList<Card> player = players_decks.get(j);
-                if (player == null) {
-                    Card p_card = new Card();
-                    cardsInPlay.add(p_card);
-                }
-                else {
-                    Card p_card = player.get(0);
-                    cardsInPlay.add(p_card);
-                    System.out.println("Player " + (j + 1) + "'s " + p_card.toString());
-                }
+                ArrayList <Card> player = players_decks.get(j);
+                Card p_card = player.remove(0);
+                cardsInPlay.add(p_card);
+                System.out.println("Player " + (j+1) + "'s " + p_card.toString());
             }
 
-            int counter = 0;
+            /**
+            // working with 2+ players seems too difficult LOL
+            for (int i = 0; i < cardsInPlay.size() - 1; i++){
+                for( int j = 1; j < cardsInPlay.size() - 1; j++){
 
-            highest = cardsInPlay.get(0);
+                    if ()
 
-            for (int i = 0; i < cardsInPlay.size(); i++) {
+                }
+
                 // assume first card played is current highest
+                highest = cardsInPlay.get(i);
 
-                if (cardsInPlay.get(i).compareTo(highest) > 1) {
+                if (cardsInPlay.get(i++).compareTo(highest) > 1){
+
                     // if next card is higher than current, mark the next card as the highest
-                    highest = cardsInPlay.get(i);
-                    //System.out.println("HELLO" + highest.toString() + "hi");
+                    highest = cardsInPlay.get(i++);
                 }
 
-            }
-            System.out.println(highest);
+                else if (cardsInPlay.get(i++).compareTo(highest) == 0){
 
-            for (int i = 0; i < cardsInPlay.size(); i++) {
-                if ((cardsInPlay.get(i).equalsTo(highest))){
-                    counter ++;
+                    // initiate war
                 }
             }
-            if (counter > 2) {
+             */
 
-                ArrayList <Card> war = new ArrayList<>();
+            if (cardsInPlay.get(0).compareTo(cardsInPlay.get(1)) == 0){
 
-                for (int k = 0; k < 4; k++) {
-
-                    for (int j = 0; j < playerNum; j++) {
-
-                        ArrayList<Card> player = players_decks.get(j);
-
-                        if (player == null) {
-                            Card c = new Card();
-                            war.add(c);
-                        }
-                        else {
-                            Card c = player.remove(0);
-                            war.add(c);
-                            System.out.println("War card for Player " + (j + 1) + "is xx");
-                            //System.out.println("Player " + (j+1) + "'s " + c1.toString());
-                        }
-                    }
-                }
-
-                ArrayList <Card> round = new ArrayList<>();
-                winner = war_start(playerNum, war, round);
-
-                //ArrayList<Card> winner_add = players_decks.get(winner);
-                //winner_add.addAll(cardsInPlay);
-                players_decks.add(winner, war);
-                winner = 0;
-            }
-            else {
-                for (int p = 0; p < cardsInPlay.size(); p++) {
-                    if (cardsInPlay.get(0).equalsTo(highest)) {
-                        winner = p;
-                    }
-                    cardsInPlay.remove(p);
-                }
-
-                players_decks.add(winner,cardsInPlay);
-                System.out.println("Player " + (winner+1) + " has won this round.");
-                winner = 0;
+                initiateWar(2, players_decks, cardsInPlay);
             }
 
-            for (int l = 0; l < playerNum; l++) {
-                ArrayList loser = players_decks.get(l);
-                if (loser.size() == 0) {
-                    losers ++;
-                    System.out.println("Player " + playerNum+ "has ran out of cards and lost.");
+            else if (cardsInPlay.get(0).compareTo(cardsInPlay.get(1)) > 0){
+
+                for(int i = 0; i < 2; i++){
+
+                    ArrayList <Card> player = players_decks.get(0);
+                    Card p_card = cardsInPlay.remove(0);
+                    player.add(p_card);
                 }
             }
 
+            else{
+
+                for (int i = 0; i < 2; i++){
+
+                    ArrayList <Card> player = players_decks.get(1);
+                    Card p_card = cardsInPlay.remove(0);
+                    player.add(p_card);
+                }
+            }
+
+            gameOn = gameOver(players_decks.get(0), players_decks.get(1));
         }
     }
 
-    public int war_start(int playerNum, ArrayList <Card> war, ArrayList<Card> round){
+    public void initiateWar(int playerNum, ArrayList<ArrayList> players_decks, ArrayList <Card> cardsInPlay){
 
-        int winner = 0;
-        Card high = new Card();
+        // each person draws three cards facedown
 
-        for (int g = 0; g+3 < war.size(); g++) {
-            Card war1 = war.remove(g);
-            round.add(war1);
-            System.out.println("War card for Player " + (g + 1) + "'s " + war1.toString());
-        }
-        int counter = 0;
-        for (int i = 0; i < round.size(); i++){
-            // assume first card played is current highest
-            if (i != 0) {
-                if (round.get(i).compareTo(high) > 1) {
-                    // if next card is higher than current, mark the next card as the highest
-                    high = round.get(i);
-                }
-            }
-        }
+        for (int i = 0; i < 4; i++){
+            ArrayList <Card> playerOne = players_decks.get(0);
+            ArrayList <Card> playerTwo = players_decks.get(1);
 
-        for (int i = 0; i < round.size(); i++) {
-            if ((round.get(i).equalsTo(high))){
-                // initiate war
-                counter ++;
-            }
-        }
+            if (i == 3) {
+                Card playCard = playerOne.remove(0);
+                System.out.println("Player 1's " + playCard);
+                cardsInPlay.add(playCard);
+                playCard= playerTwo.remove(0);
+                System.out.println("Player 2's " + playCard);
+                cardsInPlay.add(playCard);
 
-        if (counter > 2) {
-            winner = war_start(playerNum, war, round);
-
-            for (int p = 0; p < round.size(); p++) {
-                if (round.get(p).equalsTo(high)) {
-                    winner = p;
-                }
             }
 
-        }
-        return winner;
+            Card playCard = playerOne.remove(0);
 
+            cardsInPlay.add(playCard);
+
+            playCard = playerTwo.remove(0);
+
+            cardsInPlay.add(playCard);
+
+            System.out.println("Player 1's Card is xx");
+            System.out.println("Player 2's Card is xx");
+        }
     }
 
-    public void gameOver(){
+    public boolean gameOver(ArrayList<Card> playerOne, ArrayList<Card> playerTwo){
 
+        if (playerOne.isEmpty()){
 
+            System.out.println("Player two wins!");
+            return false;
+        }
+        else if (playerTwo.isEmpty()){
+
+            System.out.println("Player one wins!");
+            return false;
+        }
+
+        return true;
     }
 
+    @Override
     public String toString() {
+
         return "";
-
     }
-
-
 }
+
+
+
