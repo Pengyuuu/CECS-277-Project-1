@@ -4,10 +4,20 @@
  * Purpose: The program has two players play the card game war. To win a round, a player must have a card of higher value.
  * If both players have a card of equal value, they engage in war where they draw three facedown cards and one face up card.
  * The war ends once someone has a card of higher value. The game itself does not end until one person runs out of cards.
-*/
+ */
 import java.util.ArrayList;
 
 public class WarGame {
+
+    /** Number of games a player has won.
+     */
+    private int wins;
+
+    /** Default constructor for a game of war
+     */
+    public WarGame() {
+        wins = 0;
+    }
 
     /**
      * Runs the game
@@ -162,22 +172,12 @@ public class WarGame {
 
                 // if player one is unable to supply four cards, they lose
                 if (playerOne.isEmpty()){
-
-                    System.out.println("Player 1 ran out of cards");
-
-                    gameOver(playerOne, playerTwo);
-
                     warOn = 4;
                     war = false;
                 }
 
                 // if player two is unable to supply four cards, they lose
                 else if (playerTwo.isEmpty()){
-
-                    System.out.println("Player 2 ran out of cards");
-
-                    gameOver(playerOne, playerTwo);
-
                     warOn = 4;
                     war = false;
                 }
@@ -235,7 +235,7 @@ public class WarGame {
                 }
             }
 
-            // if player one has a higher value card, they will all ten cards
+            // if player one has a higher value card, they will win all ten cards
             if (cardsInPlay.get(topCard - 1).compareTo(cardsInPlay.get(topCard)) > 0){
 
                 while (!cardsInPlay.isEmpty()){
@@ -279,28 +279,27 @@ public class WarGame {
      */
     public boolean gameOver(ArrayList<Card> playerOne, ArrayList<Card> playerTwo){
 
+        // Player 2 wins if Player 1 is out of cards
         if (playerOne.isEmpty()){
-
-            System.out.println("Player two wins!");
-            System.out.println(playerOne.size());
+            System.out.println("Player 1 ran out of cards. ");
+            System.out.println("Player 2 wins!");
             return false;
         }
+        // Player 1 wins if Player 2 is out of cards
         else if (playerTwo.isEmpty()){
-
-            System.out.println("Player one wins!");
-            System.out.println(playerTwo.size());
+            System.out.println("Player 2 ran out of cards. ");
+            System.out.println("Player 1 wins!");
             return false;
         }
 
         return true;
     }
 
+    /** String format of # of wins in war game
+     * @return Game wins into string
+     */
     @Override
     public String toString() {
-
-        return "";
+        return ("Number of wins " + wins);
     }
 }
-
-
-
