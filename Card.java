@@ -1,6 +1,3 @@
-
-
-
 public class Card {
 
     private String rank;
@@ -22,7 +19,7 @@ public class Card {
             else if (c_value == 13) {
                 rank = "King";
             }
-            else if (c_value == 14) {
+            else if (c_value == 1) {
                 rank = "Ace";
             }
         }
@@ -49,11 +46,13 @@ public class Card {
 
     public int compareTo(Card c){
 
-        return this.value - c.value;
+        int cardOne = this.value;
+        int cardTwo = c.value;
+        return cardOne - cardTwo;
     }
 
-    //@Override
-    public String toString (Card c) {
-        return "Card is " + c.rank + " of " + c.suit;
+    @Override
+    public String toString () {
+        return "Card is " + rank + " of " + suit;
     }
 }

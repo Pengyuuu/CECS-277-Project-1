@@ -1,26 +1,14 @@
 
+
 import java.util.ArrayList;
 
 public class Deck {
 
     //private Card c;
-    private ArrayList <Card> deck;
-
-    public Deck() {
-        deck = new ArrayList<Card>();
-    }
-
-    public Card get(int x) {
-        return deck.get(x);
-    }
-
-    public void addCard(Card x) {
-        deck.add(x);
-    }
+    ArrayList <Card> deck = new ArrayList<Card>();
 
     public void addCards() {
         String card_suit = "";
-
         for (int i = 0; i < 4; i++) {
 
             for (int j = 1; j < 14; j++) {
@@ -59,26 +47,42 @@ public class Deck {
             deck.add(i,c_swap);
             deck.remove(deck.get(rd));
             deck.add(rd, c_switch);
-
         }
-
     }
 
-    public ArrayList<Card> deal(int per) {
-        ArrayList<Card> p_deck = new ArrayList<>();
-        for (int j = 0; j < per; j++) {
-            Card add = deck.remove(0);
-            p_deck.add(add);
+    public ArrayList<Card> deal(int playerNum) {
+
+        ArrayList <Card> p_deck = new ArrayList<>(26);
+
+        //int remainder = 0;
+        int i = 0;
+        /**
+        if (52 % playerNum > 0) {
+            remainder = 52 % playerNum;
         }
+         */
+
+        //int per = 52 / playerNum; // hand
+
+        /**
+        for (int k = 0; k < deck.size(); k++){
+
+            System.out.println(deck.get(k));
+            System.out.println(k);
+        }
+         */
+
+
+        for (int j = 25; j > -1; j--) {
+
+            Card addCard = deck.remove(j);
+            p_deck.add(addCard);
+        }
+
         return p_deck;
     }
 
-    public int length() {
-        int count = 0;
-        for (int i = 0; i < deck.size(); i++) {
-            count ++;
-        }
-        return count;
+    public void play() {
 
 
     }
