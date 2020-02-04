@@ -5,6 +5,7 @@
  * If both players have a card of equal value, they engage in war where they draw three facedown cards and one face up card.
  * The war ends once someone has a card of higher value. The game itself does not end until one person runs out of cards.
  */
+
 import java.util.ArrayList;
 
 public class WarGame {
@@ -25,10 +26,10 @@ public class WarGame {
      */
     public void play(int playerNum) {
 
-        // creates a new deck of cards and shuffles it
+        // creates a new deck of cards
         Deck d = new Deck();
-        d.addCards();
-        d.shuffle();
+        d.addCards(); // adds cards to deck
+        d.shuffle(); // shuffles deck
 
         // creates a list of each player's deck
         ArrayList <ArrayList> players_decks = new ArrayList<>();
@@ -56,13 +57,13 @@ public class WarGame {
                 ArrayList <Card> player = players_decks.get(j);
                 Card p_card = player.remove(0);
                 cardsInPlay.add(p_card);
-                System.out.println("Player " + (j+1) + "'s " + p_card.toString());
+                System.out.println("Player " + (j+1) + "'s " + p_card.toString()); // Reveals player's card
             }
 
             // if the cards are equal, they engage in war
             if (cardsInPlay.get(0).equals(cardsInPlay.get(1))){
 
-                warVictor = initiateWar(players_decks, cardsInPlay);
+                warVictor = initiateWar(players_decks, cardsInPlay); // starts war
 
 
                 // if player one wins, they get all ten cards
@@ -70,11 +71,11 @@ public class WarGame {
 
                     for (int i = 0; i < 2; i++){
 
-                        ArrayList <Card> player = players_decks.get(0);
+                        ArrayList <Card> player = players_decks.get(0); // gets Player 1's deck
 
                         while (!cardsInPlay.isEmpty()){
 
-                            player.add(cardsInPlay.remove(0));
+                            player.add(cardsInPlay.remove(0)); // adds cards played to Player 1's deck
                         }
                     }
                 }
@@ -83,11 +84,11 @@ public class WarGame {
 
                     for (int i = 0; i < 2; i++){
 
-                        ArrayList <Card> player = players_decks.get(1);
+                        ArrayList <Card> player = players_decks.get(1); // gets Player 2's deck
 
                         while (!cardsInPlay.isEmpty()){
 
-                            player.add(cardsInPlay.remove(0));
+                            player.add(cardsInPlay.remove(0)); // adds cards played to winner's deck
                         }
                     }
                 }
@@ -98,12 +99,12 @@ public class WarGame {
 
                 for(int i = 0; i < 2; i++){
 
-                    ArrayList <Card> player = players_decks.get(0);
+                    ArrayList <Card> player = players_decks.get(0); // gets Player 1's deck
                     Card p_card = cardsInPlay.remove(0);
-                    player.add(p_card);
+                    player.add(p_card); // adds card in play to Player 1's deck
                 }
 
-                System.out.println("Player 1 wins the round");
+                System.out.println("Player 1 wins the round"); // tells user that Player 1 won the round
             }
 
             // if player two has a higher value card, they get both cards
@@ -111,15 +112,15 @@ public class WarGame {
 
                 for (int i = 0; i < 2; i++){
 
-                    ArrayList <Card> player = players_decks.get(1);
+                    ArrayList <Card> player = players_decks.get(1); // gets Player 2's deck
                     Card p_card = cardsInPlay.remove(0);
-                    player.add(p_card);
+                    player.add(p_card); // adds card in play to Player 2's deck
                 }
 
-                System.out.println("Player 2 wins the round");
+                System.out.println("Player 2 wins the round"); // tells user that Player 2 won the round
             }
 
-            // check if either player has ran out of cards
+            // checks if either player has ran out of cards
             gameOn = gameOver(players_decks.get(0), players_decks.get(1));
         }
     }
@@ -144,17 +145,17 @@ public class WarGame {
 
         // deals the 4 cards
         while (warOn < 4){
-            ArrayList <Card> playerOne = players_decks.get(0);
-            ArrayList <Card> playerTwo = players_decks.get(1);
+            ArrayList <Card> playerOne = players_decks.get(0); // Player 1's deck
+            ArrayList <Card> playerTwo = players_decks.get(1); // Player 2's deck
 
             // the fourth card is played face up
             if (warOn == 3) {
                 Card playCard = playerOne.remove(0);
-                System.out.println("Player 1's " + playCard);
-                cardsInPlay.add(playCard);
-                playCard= playerTwo.remove(0);
+                System.out.println("Player 1's " + playCard); // reveals Player 1's 4th card face up
+                cardsInPlay.add(playCard); // adds that card to cards in play
+                playCard= playerTwo.remove(0); // reveals Player 2's 4th card face up
                 System.out.println("Player 2's " + playCard);
-                cardsInPlay.add(playCard);
+                cardsInPlay.add(playCard); // adds that card to cards in play
 
             }
 
@@ -162,13 +163,13 @@ public class WarGame {
             else {
 
                 // remove the cards from their decks and play them
-                Card playCard = playerOne.remove(0);
+                Card playCard = playerOne.remove(0); // removes a card from Player 1's deck
 
-                cardsInPlay.add(playCard);
+                cardsInPlay.add(playCard); // adds Player 1's card to cards in play
 
-                playCard = playerTwo.remove(0);
+                playCard = playerTwo.remove(0); // removes a card from Player 2's deck
 
-                cardsInPlay.add(playCard);
+                cardsInPlay.add(playCard); // adds Player 2's card to cards in play
 
                 // if player one is unable to supply four cards, they lose
                 if (playerOne.isEmpty()){
@@ -183,9 +184,8 @@ public class WarGame {
                 }
 
                 else {
-
-                    System.out.println("Player 1's Card is xx");
-                    System.out.println("Player 2's Card is xx");
+                    System.out.println("Player 1's Card is xx"); // tells user of Player 1's face down (unknown) cards during war
+                    System.out.println("Player 2's Card is xx"); // tells user of Player 2's face down (unknown) cards during war
                 }
             }
 
@@ -200,7 +200,6 @@ public class WarGame {
             while ((cardsInPlay.get(topCard).compareTo(cardsInPlay.get(topCard - 1))) == 0){
 
                 topCard = topCard - 2;
-                System.out.println(topCard);
                 System.out.println("Player 1's " + cardsInPlay.get(topCard - 1));
                 System.out.println("Player 2's " + cardsInPlay.get(topCard));
 
@@ -214,7 +213,7 @@ public class WarGame {
                         player.add(p_card);
                     }
 
-                    System.out.println("Player 1 wins the war round");
+                    System.out.println("Player 1 wins the war round"); // tells user that Player 1 has won the round
                     war = false;
                     return pOneWin;
                 }
@@ -229,7 +228,7 @@ public class WarGame {
                         player.add(p_card);
                     }
 
-                    System.out.println("Player 2 wins the war round");
+                    System.out.println("Player 2 wins the war round"); // tells user that Player 2 has won the round
                     war = false;
                     return pTwoWin;
                 }
@@ -245,7 +244,7 @@ public class WarGame {
                     player.add(p_card);
                 }
 
-                System.out.println("Player 1 wins the war round");
+                System.out.println("Player 1 wins the war round"); // tells user that Player 1 has won the round
                 war = false;
                 return pOneWin;
             }
@@ -260,7 +259,7 @@ public class WarGame {
                     player.add(p_card);
                 }
 
-                System.out.println("Player 2 wins the war round");
+                System.out.println("Player 2 wins the war round"); // tells user that Player 2 has won the round
                 war = false;
                 return pTwoWin;
             }
@@ -281,14 +280,14 @@ public class WarGame {
 
         // Player 2 wins if Player 1 is out of cards
         if (playerOne.isEmpty()){
-            System.out.println("Player 1 ran out of cards. ");
-            System.out.println("Player 2 wins!");
+            System.out.println("Player 1 ran out of cards. "); // tells user that Player 1 loses
+            System.out.println("Player 2 wins!"); // tells user that Player 2 wins
             return false;
         }
         // Player 1 wins if Player 2 is out of cards
         else if (playerTwo.isEmpty()){
-            System.out.println("Player 2 ran out of cards. ");
-            System.out.println("Player 1 wins!");
+            System.out.println("Player 2 ran out of cards. "); // tells user that Player 2 loses
+            System.out.println("Player 1 wins!"); // tells user that Player 1 wins
             return false;
         }
 
