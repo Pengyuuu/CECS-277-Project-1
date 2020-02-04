@@ -1,17 +1,29 @@
 
-
 import java.util.ArrayList;
 
 public class Deck {
 
     //private Card c;
-    ArrayList <Card> deck = new ArrayList<Card>();
+    private ArrayList <Card> deck;
+
+    public Deck() {
+        deck = new ArrayList<Card>();
+    }
+
+    public Card get(int x) {
+        return deck.get(x);
+    }
+
+    public void addCard(Card x) {
+        deck.add(x);
+    }
 
     public void addCards() {
         String card_suit = "";
+
         for (int i = 0; i < 4; i++) {
 
-            for (int j = 1; j < 15; j++) {
+            for (int j = 1; j < 14; j++) {
 
                 if (i == 0) {
                     card_suit = "Hearts";
@@ -52,29 +64,21 @@ public class Deck {
 
     }
 
-    public ArrayList<Card> deal(int playerNum) {
-
+    public ArrayList<Card> deal(int per) {
         ArrayList<Card> p_deck = new ArrayList<>();
-
-        int remainder = 0;
-        int i = 0;
-        if (52 % playerNum > 0) {
-            remainder = 52 % playerNum;
-        }
-
-        int per = 52 / playerNum; // hand
-
-
         for (int j = 0; j < per; j++) {
-            Card add = deck.remove(j);
+            Card add = deck.remove(0);
             p_deck.add(add);
-
         }
         return p_deck;
-
     }
 
-    public void play() {
+    public int length() {
+        int count = 0;
+        for (int i = 0; i < deck.size(); i++) {
+            count ++;
+        }
+        return count;
 
 
     }
