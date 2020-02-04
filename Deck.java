@@ -80,9 +80,12 @@ public class Deck {
         return p_deck;
     }
 
+    /** Converts deck to string format
+     * @return string of deck
+     */
     @Override
     public String toString () {
-        return "";
+        return deck.toString();
     }
 
 }
