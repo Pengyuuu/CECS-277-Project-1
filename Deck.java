@@ -10,9 +10,12 @@ import java.util.ArrayList;
 
 public class Deck {
 
-    //private Card c;
+    // creates the deck
     ArrayList <Card> deck = new ArrayList<Card>();
 
+    /**
+     * Add cards into the deck
+     */
     public void addCards() {
         String card_suit = "";
         for (int i = 0; i < 4; i++) {
@@ -37,6 +40,9 @@ public class Deck {
         }
     }
 
+    /**
+     * Shuffles the deck
+     */
     public void shuffle() {
 
         int max = deck.size()-1;
@@ -56,6 +62,11 @@ public class Deck {
         }
     }
 
+    /**
+     * Deals cards to each player
+     * @param playerNum number of players participating
+     * @return          a deck of cards
+     */
     public ArrayList<Card> deal(int playerNum) {
 
         ArrayList <Card> p_deck = new ArrayList<>(26);
