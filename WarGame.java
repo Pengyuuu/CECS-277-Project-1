@@ -29,31 +29,32 @@ public class WarGame {
             for (int j = 0; j < playerNum; j++) {
 
                 ArrayList<Card> player = players_decks.get(j);
-                if (player.size() == 0) {
+                if (player == null) {
                     Card p_card = new Card();
                     cardsInPlay.add(p_card);
                 }
                 else {
-                    Card p_card = player.remove(0);
+                    Card p_card = player.get(0);
                     cardsInPlay.add(p_card);
                     System.out.println("Player " + (j + 1) + "'s " + p_card.toString());
                 }
             }
 
             int counter = 0;
+
+            highest = cardsInPlay.get(0);
+
             for (int i = 0; i < cardsInPlay.size(); i++) {
-                //System.out.println(cardsInPlay.get(i).toString());
                 // assume first card played is current highest
-                highest = cardsInPlay.get(i);
-                System.out.println("highest" + highest.toString());
 
                 if (cardsInPlay.get(i).compareTo(highest) > 1) {
                     // if next card is higher than current, mark the next card as the highest
                     highest = cardsInPlay.get(i);
-                    System.out.println("HELLO" + highest.toString() + "hi");
+                    //System.out.println("HELLO" + highest.toString() + "hi");
                 }
 
             }
+            System.out.println(highest);
 
             for (int i = 0; i < cardsInPlay.size(); i++) {
                 if ((cardsInPlay.get(i).equalsTo(highest))){
@@ -70,7 +71,7 @@ public class WarGame {
 
                         ArrayList<Card> player = players_decks.get(j);
 
-                        if (player.size() == 0) {
+                        if (player == null) {
                             Card c = new Card();
                             war.add(c);
                         }
@@ -93,22 +94,25 @@ public class WarGame {
             }
             else {
                 for (int p = 0; p < cardsInPlay.size(); p++) {
-                    if (cardsInPlay.get(p).equalsTo(highest)) {
+                    if (cardsInPlay.get(0).equalsTo(highest)) {
                         winner = p;
                     }
+                    cardsInPlay.remove(p);
                 }
+
                 players_decks.add(winner,cardsInPlay);
                 System.out.println("Player " + (winner+1) + " has won this round.");
                 winner = 0;
             }
 
             for (int l = 0; l < playerNum; l++) {
-                ArrayList loser = players_decks.get(playerNum);
+                ArrayList loser = players_decks.get(l);
                 if (loser.size() == 0) {
                     losers ++;
                     System.out.println("Player " + playerNum+ "has ran out of cards and lost.");
                 }
             }
+
         }
     }
 
