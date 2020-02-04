@@ -51,6 +51,17 @@ public class Card {
         return cardOne - cardTwo;
     }
 
+    public boolean equals(Object o){
+
+        if (o instanceof Card){
+
+            Card c = (Card) o;
+            return this.getValue() == c.getValue();
+        }
+
+        return false;
+    }
+
     @Override
     public String toString () {
         return "Card is " + rank + " of " + suit;

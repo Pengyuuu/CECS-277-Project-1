@@ -54,25 +54,6 @@ public class Deck {
 
         ArrayList <Card> p_deck = new ArrayList<>(26);
 
-        //int remainder = 0;
-        int i = 0;
-        /**
-        if (52 % playerNum > 0) {
-            remainder = 52 % playerNum;
-        }
-         */
-
-        //int per = 52 / playerNum; // hand
-
-        /**
-        for (int k = 0; k < deck.size(); k++){
-
-            System.out.println(deck.get(k));
-            System.out.println(k);
-        }
-         */
-
-
         for (int j = 25; j > -1; j--) {
 
             Card addCard = deck.remove(j);
@@ -80,11 +61,6 @@ public class Deck {
         }
 
         return p_deck;
-    }
-
-    public void play() {
-
-
     }
 
     @Override

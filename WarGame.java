@@ -20,18 +20,9 @@ public class WarGame {
         ArrayList <Card> playerTwo = d.deal(playerNum);
         players_decks.add(playerTwo);
 
-        /**
-        for (int i = 0; i < playerNum; i++) {
-            ArrayList <Card> player = d.deal(playerNum);
-            players_decks.add(player);
-        }
-         */
-
-        //Card max;
-        // ERIC IDK HOW TO FIX THIS 
-        // how to like idk uhhh remember the players' cards and compare
-
         boolean gameOn = true;
+
+        int warVictor = 0;
 
         while (gameOn){
             for (int j = 0; j < playerNum; j++) {
@@ -41,15 +32,38 @@ public class WarGame {
                 System.out.println("Player " + (j+1) + "'s " + p_card.toString());
             }
 
-            if (cardsInPlay.get(0).compareTo(cardsInPlay.get(1)) == 0){
+            if (cardsInPlay.get(0).equals(cardsInPlay.get(1))){
 
-                System.out.println(cardsInPlay.get(0).compareTo(cardsInPlay.get(1)));
-                initiateWar(2, players_decks, cardsInPlay);
+                warVictor = initiateWar(players_decks, cardsInPlay);
+
+
+                if (warVictor == 1){
+
+                    for (int i = 0; i < 2; i++){
+
+                        ArrayList <Card> player = players_decks.get(0);
+
+                        while (!cardsInPlay.isEmpty()){
+
+                            player.add(cardsInPlay.remove(0));
+                        }
+                    }
+                }
+                else if (warVictor == 2){
+
+                    for (int i = 0; i < 2; i++){
+
+                        ArrayList <Card> player = players_decks.get(1);
+
+                        while (!cardsInPlay.isEmpty()){
+
+                            player.add(cardsInPlay.remove(0));
+                        }
+                    }
+                }
             }
 
             else if (cardsInPlay.get(0).compareTo(cardsInPlay.get(1)) > 0){
-
-                System.out.println("Player 1 " + cardsInPlay.get(0).compareTo(cardsInPlay.get(1)));
 
                 for(int i = 0; i < 2; i++){
 
@@ -62,8 +76,6 @@ public class WarGame {
             }
 
             else if (cardsInPlay.get(0).compareTo(cardsInPlay.get(1)) < 0){
-
-                System.out.println("Player 2 " + cardsInPlay.get(0).compareTo(cardsInPlay.get(1)));
 
                 for (int i = 0; i < 2; i++){
 
@@ -79,9 +91,13 @@ public class WarGame {
         }
     }
 
-    public void initiateWar(int playerNum, ArrayList<ArrayList> players_decks, ArrayList <Card> cardsInPlay){
+    public int initiateWar(ArrayList<ArrayList> players_decks, ArrayList <Card> cardsInPlay){
 
         // each person draws three cards facedown
+        boolean war = true;
+
+        int pOneWin = 1;
+        int pTwoWin = 2;
 
         int warOn = 0;
 
@@ -116,6 +132,7 @@ public class WarGame {
                     gameOver(playerOne, playerTwo);
 
                     warOn = 4;
+                    war = false;
                 }
                 else if (playerTwo.isEmpty()){
 
@@ -124,6 +141,7 @@ public class WarGame {
                     gameOver(playerOne, playerTwo);
 
                     warOn = 4;
+                    war = false;
                 }
 
                 else {
@@ -136,11 +154,46 @@ public class WarGame {
             warOn++;
         }
 
-        boolean war = true;
-        int topCard = 7;
+        int topCard = 9;
         while (war){
 
-            if (cardsInPlay.get(topCard).compareTo(cardsInPlay.get(topCard - 1)) > 0){
+            while ((cardsInPlay.get(topCard).compareTo(cardsInPlay.get(topCard - 1))) == 0){
+
+                topCard = topCard - 2;
+                System.out.println(topCard);
+                System.out.println("Player 1's " + cardsInPlay.get(topCard - 1));
+                System.out.println("Player 2's " + cardsInPlay.get(topCard));
+
+                if (cardsInPlay.get(topCard - 1).compareTo(cardsInPlay.get(topCard)) > 0){
+
+                    for(int j = topCard; j > -1; j--){
+
+                        ArrayList <Card> player = players_decks.get(1);
+                        Card p_card = cardsInPlay.remove(0);
+                        player.add(p_card);
+                    }
+
+                    System.out.println("Player 1 wins the war round");
+                    war = false;
+                    return pTwoWin;
+                }
+
+                else if (cardsInPlay.get(topCard - 1).compareTo(cardsInPlay.get(topCard)) < 0){
+
+                    for (int j = topCard; j > -1; j--){
+
+                        ArrayList <Card> player = players_decks.get(0);
+                        Card p_card = cardsInPlay.remove(0);
+                        player.add(p_card);
+                    }
+
+                    System.out.println("Player 2 wins the war round");
+                    war = false;
+                    return pOneWin;
+                }
+            }
+
+            if (cardsInPlay.get(topCard - 1).compareTo(cardsInPlay.get(topCard)) > 0){
 
                 for(int j = topCard; j > -1; j--){
 
@@ -149,11 +202,12 @@ public class WarGame {
                     player.add(p_card);
                 }
 
-                System.out.println("Player 2 wins the war round");
+                System.out.println("Player 1 wins the war round");
                 war = false;
+                return pTwoWin;
             }
 
-            else if (cardsInPlay.get(topCard).compareTo(cardsInPlay.get(topCard - 1)) < 0){
+            else if (cardsInPlay.get(topCard - 1).compareTo(cardsInPlay.get(topCard)) < 0){
 
                 for (int j = topCard; j > -1; j--){
 
@@ -162,12 +216,15 @@ public class WarGame {
                     player.add(p_card);
                 }
 
-                System.out.println("Player 1 wins the war round");
+                System.out.println("Player 2 wins the war round");
                 war = false;
+                return pOneWin;
             }
 
             topCard--;
         }
+
+        return 0;
     }
 
     public boolean gameOver(ArrayList<Card> playerOne, ArrayList<Card> playerTwo){
