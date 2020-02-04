@@ -31,6 +31,8 @@ public class WarGame {
                 cardsInPlay.add(p_card);
                 System.out.println("Player " + (j+1) + "'s " + p_card.toString());
             }
+            System.out.println(players_decks.get(0).size());
+            System.out.println(players_decks.get(1).size());
 
             if (cardsInPlay.get(0).equals(cardsInPlay.get(1))){
 
@@ -166,59 +168,59 @@ public class WarGame {
 
                 if (cardsInPlay.get(topCard - 1).compareTo(cardsInPlay.get(topCard)) > 0){
 
-                    for(int j = topCard; j > -1; j--){
-
-                        ArrayList <Card> player = players_decks.get(1);
-                        Card p_card = cardsInPlay.remove(0);
-                        player.add(p_card);
-                    }
-
-                    System.out.println("Player 1 wins the war round");
-                    war = false;
-                    return pTwoWin;
-                }
-
-                else if (cardsInPlay.get(topCard - 1).compareTo(cardsInPlay.get(topCard)) < 0){
-
-                    for (int j = topCard; j > -1; j--){
+                    while (!cardsInPlay.isEmpty()){
 
                         ArrayList <Card> player = players_decks.get(0);
                         Card p_card = cardsInPlay.remove(0);
                         player.add(p_card);
                     }
 
-                    System.out.println("Player 2 wins the war round");
+                    System.out.println("Player 1 wins the war round");
                     war = false;
                     return pOneWin;
+                }
+
+                else if (cardsInPlay.get(topCard - 1).compareTo(cardsInPlay.get(topCard)) < 0){
+
+                    while (!cardsInPlay.isEmpty()){
+
+                        ArrayList <Card> player = players_decks.get(1);
+                        Card p_card = cardsInPlay.remove(0);
+                        player.add(p_card);
+                    }
+
+                    System.out.println("Player 2 wins the war round");
+                    war = false;
+                    return pTwoWin;
                 }
             }
 
             if (cardsInPlay.get(topCard - 1).compareTo(cardsInPlay.get(topCard)) > 0){
 
-                for(int j = topCard; j > -1; j--){
-
-                    ArrayList <Card> player = players_decks.get(1);
-                    Card p_card = cardsInPlay.remove(0);
-                    player.add(p_card);
-                }
-
-                System.out.println("Player 1 wins the war round");
-                war = false;
-                return pTwoWin;
-            }
-
-            else if (cardsInPlay.get(topCard - 1).compareTo(cardsInPlay.get(topCard)) < 0){
-
-                for (int j = topCard; j > -1; j--){
+                while (!cardsInPlay.isEmpty()){
 
                     ArrayList <Card> player = players_decks.get(0);
                     Card p_card = cardsInPlay.remove(0);
                     player.add(p_card);
                 }
 
-                System.out.println("Player 2 wins the war round");
+                System.out.println("Player 1 wins the war round");
                 war = false;
                 return pOneWin;
+            }
+
+            else if (cardsInPlay.get(topCard - 1).compareTo(cardsInPlay.get(topCard)) < 0){
+
+                while (!cardsInPlay.isEmpty()){
+
+                    ArrayList <Card> player = players_decks.get(1);
+                    Card p_card = cardsInPlay.remove(0);
+                    player.add(p_card);
+                }
+
+                System.out.println("Player 2 wins the war round");
+                war = false;
+                return pTwoWin;
             }
 
             topCard--;
@@ -232,11 +234,13 @@ public class WarGame {
         if (playerOne.isEmpty()){
 
             System.out.println("Player two wins!");
+            System.out.println(playerOne.size());
             return false;
         }
         else if (playerTwo.isEmpty()){
 
             System.out.println("Player one wins!");
+            System.out.println(playerTwo.size());
             return false;
         }
 
