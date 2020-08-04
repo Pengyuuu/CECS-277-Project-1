@@ -1,3 +1,3 @@
-# CECS-229-Project-1
+# CECS-277-Project-1
 
 Help :)
